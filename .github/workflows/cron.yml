@@ -1,0 +1,26 @@
+name: Cron Action
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *'
+
+
+jobs:
+  promoapps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install Requirements
+        run: pip install -r requirements.txt
+      - name: Run Rss to Telegram
+        run: python rss2telegram.py
+        env:
+          DESTINATION: ${{ secrets.DESTINATION }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          FEED_URL: ${{ secrets.URL }}
+          EMOJIS: ${{ secrets.EMOJIS }}
