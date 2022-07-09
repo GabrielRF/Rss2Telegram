@@ -22,5 +22,5 @@ jobs:
         env:
           DESTINATION: ${{ secrets.DESTINATION }}
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          FEED_URL: ${{ secrets.URL }}
+          URL: ${{ secrets.URL }}
           EMOJIS: ${{ secrets.EMOJIS }}
