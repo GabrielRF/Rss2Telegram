@@ -32,9 +32,9 @@ def check_history(link):
     conn.close()
     return data
 
-def send_message(title, link, photo):
+def send_message(source, title, link, photo):
     btn_link = types.InlineKeyboardMarkup()
-    btn = types.InlineKeyboardButton(f'{random.choice(EMOJIS.split(","))} Leia mais', url=link)
+    btn = types.InlineKeyboardButton(f'{random.choice(EMOJIS.split(","))} {source}', url=link)
     btn_link.row(btn)
     print(f'Enviando {title}')
     try:
@@ -56,11 +56,12 @@ def check_topics(url):
     now = gmtime()
     feed = feedparser.parse(url)
     for topic in reversed(feed['items'][:10]):
+        source = feed['feed']['title']
         title = f'<b>{topic.title}</b>'
         link = topic.links[0].href
         photo = get_img(topic.links[0].href)
         if not check_history(link):
-            send_message(title, link, photo)
+            send_message(source, title, link, photo)
             add_to_history(link)
         else:
             print(f'Repetido: {link}')
