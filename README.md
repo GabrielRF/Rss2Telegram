@@ -12,7 +12,7 @@ Defina as variáveis na aba `Secrets` do repositório:
 
 `DESTINATION`: Canal público que receberá as mensagens. Exemplo: `PromoPassagens` (não use `@`!);
 
-`FEED_URL`: Endereços de feeds RSS separados por vírgulas;
+`URL`: Endereços de feeds RSS separados por vírgulas;
 
 `EMOJIS`: Emojis separados por vírgulas usados na composição do botão.
 
