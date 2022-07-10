@@ -55,8 +55,9 @@ def get_img(url):
 def check_topics(url):
     now = gmtime()
     feed = feedparser.parse(url)
+    source = feed['feed']['title']
+    print(f'Checando {source}...')
     for topic in reversed(feed['items'][:10]):
-        source = feed['feed']['title']
         title = f'<b>{topic.title}</b>'
         link = topic.links[0].href
         photo = get_img(topic.links[0].href)
@@ -68,6 +69,5 @@ def check_topics(url):
 
 if __name__ == "__main__":
     for url in URL.split(','):
-        print(f'Checando {url}...')
         check_topics(url)
 
