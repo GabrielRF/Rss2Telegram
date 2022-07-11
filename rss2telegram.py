@@ -37,28 +37,35 @@ def send_message(source, title, link, photo):
     btn_link = types.InlineKeyboardMarkup()
     btn = types.InlineKeyboardButton(f'{random.choice(EMOJIS.split(","))} {source}', url=link)
     btn_link.row(btn)
-    print(f'Enviando {title}')
-    try:
-        response = requests.get(photo)
-        open('img.png', 'wb').write(response.content)
-        photo = open('img.png', 'rb')
+    if photo:
+        response = requests.get(photo, headers = {'User-agent': 'Mozilla/5.1'})
+        open('img', 'wb').write(response.content)
+        photo = open('img', 'rb')
         for dest in DESTINATION.split(','):
-            bot.send_photo(dest, photo, caption=title, parse_mode='HTML', reply_markup=btn_link)
-    except:
+            try:
+                bot.send_photo(dest, photo, caption=title, parse_mode='HTML', reply_markup=btn_link)
+            except telebot.apihelper.ApiTelegramException:
+                send_message(source, title, link, False)
+    else:
         for dest in DESTINATION.split(','):
             bot.send_message(dest, title, parse_mode='HTML', reply_markup=btn_link, disable_web_page_preview=True)
+    print(f'... {title}')
     time.sleep(0.2)
 
 def get_img(url):
     response = requests.get(url, headers = {'User-agent': 'Mozilla/5.1'})
-    html = BeautifulSoup(response.content, 'html.parser')
-    return html.find('meta', {'property': 'og:image'})['content']
+    try:
+        html = BeautifulSoup(response.content, 'html.parser')
+        photo = html.find('meta', {'property': 'og:image'})['content']
+    except TypeError:
+        photo = False
+    return photo
 
 def check_topics(url):
     now = gmtime()
     feed = feedparser.parse(url)
     source = feed['feed']['title']
-    print(f'Checando {source}...')
+    print(f'Checando {source}')
     for topic in reversed(feed['items'][:10]):
         title = f'<b>{topic.title}</b>'
         link = topic.links[0].href
@@ -66,8 +73,6 @@ def check_topics(url):
         if not check_history(link):
             send_message(source, title, link, photo)
             add_to_history(link)
-        else:
-            print(f'Repetido: {link}')
 
 if __name__ == "__main__":
     for url in URL.split(','):
