@@ -4,6 +4,7 @@ from time import gmtime
 import feedparser
 import os
 import telebot
+import time
 import random
 import requests
 import sqlite3
@@ -46,6 +47,7 @@ def send_message(source, title, link, photo):
     except:
         for dest in DESTINATION.split(','):
             bot.send_message(dest, title, parse_mode='HTML', reply_markup=btn_link, disable_web_page_preview=True)
+    time.sleep(0.2)
 
 def get_img(url):
     response = requests.get(url, headers = {'User-agent': 'Mozilla/5.1'})
