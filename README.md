@@ -14,7 +14,21 @@ Defina as variáveis na aba `Secrets` do repositório:
 
 `URL`: Endereços de feeds RSS separados por vírgulas;
 
-`EMOJIS`: Emojis separados por vírgulas usados na composição do botão.
+`EMOJIS`: Emojis separados por vírgulas usados na composição do botão;
+
+`MESSAGE_TEMPLATE`: (opcional) Texto da mensagem. Valor padrão: `<b>{topic["title"]}</b>` ([ver opções](#opções-de-variáveis));
+
+`BUTTON_TEXT`: (opcional) Texto do botão com o link. Sugestão: `{topic['site_name']}`. Se esta variável não for criada não será enviado um botão.
+
+### Opções de variáveis
+
+`{topic['site_name']}`: Nome do site;
+
+`{topic['title']}`: Título do post;
+
+`{topic['summary']}`: Sumário do post;
+
+`{topic['link']}`: Link do post.
 
 ## Uso
 
