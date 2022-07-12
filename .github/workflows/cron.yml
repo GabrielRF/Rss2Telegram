@@ -33,6 +33,8 @@ jobs:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           URL: ${{ secrets.URL }}
           EMOJIS: ${{ secrets.EMOJIS }}
+          MESSAGE_TEMPLATE: ${{ secrets.MESSAGE_TEMPLATE }}
+          BUTTON_TEXT: ${{ secrets.BUTTON_TEXT }}
       - name: Upload history
         uses: actions/upload-artifact@v3
         with:
