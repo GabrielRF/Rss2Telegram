@@ -64,10 +64,15 @@ def get_img(url):
 def check_topics(url):
     now = gmtime()
     feed = feedparser.parse(url)
-    source = feed['feed']['title']
-    print(f'Checando {source}')
+    try:
+        source = feed['feed']['title']
+    except KeyError:
+        print(f'\nERRO: {url} não parece um feed RSS válido.\n')
+        return
+    print(f'Checando {source}:{url}')
     for topic in reversed(feed['items'][:10]):
         title = f'<b>{topic.title}</b>'
+        summary = topic.summary
         link = topic.links[0].href
         photo = get_img(topic.links[0].href)
         if not check_history(link):
