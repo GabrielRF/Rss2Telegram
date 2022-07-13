@@ -3,6 +3,7 @@ from telebot import types
 from time import gmtime
 import feedparser
 import os
+import re
 import telebot
 import time
 import random
@@ -34,12 +35,16 @@ def check_history(link):
     return data
 
 def send_message(topic, button):
-    MESSAGE_TEMPLATE = os.environ.get(f'MESSAGE_TEMPLATE', f'<b>{topic["title"]}</b>')
+    MESSAGE_TEMPLATE = os.environ.get(f'MESSAGE_TEMPLATE', False)
+    if MESSAGE_TEMPLATE:
+        MESSAGE_TEMPLATE = set_env_vars(MESSAGE_TEMPLATE, topic)
+    else:
+        MESSAGE_TEMPLATE = f'<b>{topic["title"]}</b>'
 
     btn_link = button
     if button:
         btn_link = types.InlineKeyboardMarkup()
-        btn = types.InlineKeyboardButton(f'{random.choice(EMOJIS.split(","))} {button}', url=topic['link'])
+        btn = types.InlineKeyboardButton(f'{button}', url=topic['link'])
         btn_link.row(btn)
 
     if topic['photo']:
@@ -50,7 +55,8 @@ def send_message(topic, button):
             try:
                 bot.send_photo(dest, photo, caption=MESSAGE_TEMPLATE, parse_mode='HTML', reply_markup=btn_link)
             except telebot.apihelper.ApiTelegramException:
-                send_message(topic, False)
+                topic['photo'] = False
+                send_message(topic, button)
     else:
         for dest in DESTINATION.split(','):
             bot.send_message(dest, MESSAGE_TEMPLATE, parse_mode='HTML', reply_markup=button, disable_web_page_preview=True)
@@ -65,6 +71,22 @@ def get_img(url):
     except TypeError:
         photo = False
     return photo
+
+def set_env_vars(text, topic):
+    cases = {
+        'SITE_NAME': topic['site_name'],
+        'TITLE': topic['title'],
+        'SUMMARY': topic['summary'],
+        'LINK': topic['link'],
+        'EMOJI': random.choice(EMOJIS.split(","))
+    }
+    for word in re.split('{|}', text):
+        try:
+            text = text.replace(word, cases.get(word))
+        except TypeError:
+            continue
+    return text.replace('\\n', '\n').replace('{', '').replace('}', '')
+
 
 def check_topics(url):
     now = gmtime()
@@ -82,7 +104,9 @@ def check_topics(url):
         topic['summary'] = tpc.summary
         topic['link'] = tpc.links[0].href
         topic['photo'] = get_img(tpc.links[0].href)
-        BUTTON_TEXT = os.environ.get(f'BUTTON_TEXT', False)
+        BUTTON_TEXT = os.environ.get('BUTTON_TEXT', False)
+        if BUTTON_TEXT:
+            BUTTON_TEXT = set_env_vars(BUTTON_TEXT, topic)
         send_message(topic, BUTTON_TEXT)
         add_to_history(topic['link'])
 
