@@ -107,7 +107,10 @@ def check_topics(url):
         BUTTON_TEXT = os.environ.get('BUTTON_TEXT', False)
         if BUTTON_TEXT:
             BUTTON_TEXT = set_env_vars(BUTTON_TEXT, topic)
-        send_message(topic, BUTTON_TEXT)
+        try:
+            send_message(topic, BUTTON_TEXT)
+        except telebot.apihelper.ApiTelegramException:
+            pass
         add_to_history(topic['link'])
 
 if __name__ == "__main__":
