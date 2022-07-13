@@ -76,7 +76,7 @@ def set_env_vars(text, topic):
     cases = {
         'SITE_NAME': topic['site_name'],
         'TITLE': topic['title'],
-        'SUMMARY': topic['summary'],
+        'SUMMARY': re.sub('<[^<]+?>', '', topic['summary']),
         'LINK': topic['link'],
         'EMOJI': random.choice(EMOJIS.split(","))
     }
