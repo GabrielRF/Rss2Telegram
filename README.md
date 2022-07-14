@@ -16,7 +16,7 @@ Defina as variáveis na aba `Secrets` do repositório:
 
 `MESSAGE_TEMPLATE`: (opcional) Texto da mensagem. Valor padrão: `<b>{TITLE}</b>` ([ver opções](#opções-de-variáveis));
 
-`BUTTON_TEXT`: (opcional) Texto do botão com o link. Sugestão: `{SITE_NAME]}`. Se esta variável não for criada não será enviado um botão. ([Ver opções](#opções-de-variáveis));
+`BUTTON_TEXT`: (opcional) Texto do botão com o link. Sugestão: `{SITE_NAME}`. Se esta variável não for criada não será enviado um botão. ([Ver opções](#opções-de-variáveis));
 
 `EMOJIS`: (opcional) Emojis separados por vírgulas. Podem ser usados na mensagem ou no botão;
 
