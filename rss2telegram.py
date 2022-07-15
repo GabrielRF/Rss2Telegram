@@ -98,6 +98,8 @@ def check_topics(url):
         return
     print(f'\nChecando {source}:{url}')
     for tpc in reversed(feed['items'][:10]):
+        if check_history(tpc.links[0].href):
+            continue
         topic = {}
         topic['site_name'] = feed['feed']['title']
         topic['title'] = tpc.title.strip()
