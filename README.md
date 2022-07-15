@@ -4,6 +4,8 @@
 
 Envio automático de feed RSS para pessoa, canal ou grupo no Telegram.
 
+[Mais explicações e exemplos de uso aqui](https://blog.gabrf.com/posts/Rss2Telegram/).
+
 ## Configuração:
 
 Defina as variáveis na aba `Secrets` do repositório:
