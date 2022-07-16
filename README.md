@@ -16,6 +16,8 @@ Defina as variáveis na aba `Secrets` do repositório:
 
 `URL`: Endereços de feeds RSS separados por vírgulas;
 
+`PARAMETERS`: (opcional) Parâmetros que serão adicionados ao fim do link;
+
 `MESSAGE_TEMPLATE`: (opcional) Texto da mensagem. Valor padrão: `<b>{TITLE}</b>` ([ver opções](#opções-de-variáveis));
 
 `BUTTON_TEXT`: (opcional) Texto do botão com o link. Sugestão: `{SITE_NAME}`. Se esta variável não for criada não será enviado um botão. ([Ver opções](#opções-de-variáveis));
