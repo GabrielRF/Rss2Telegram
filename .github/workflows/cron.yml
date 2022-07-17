@@ -35,6 +35,7 @@ jobs:
           EMOJIS: ${{ secrets.EMOJIS }}
           MESSAGE_TEMPLATE: ${{ secrets.MESSAGE_TEMPLATE }}
           BUTTON_TEXT: ${{ secrets.BUTTON_TEXT }}
+          PARAMETERS: ${{ secrets.PARAMETERS }}
       - name: Upload history
         uses: actions/upload-artifact@v3
         with:
