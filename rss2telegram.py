@@ -15,6 +15,7 @@ DESTINATION = os.environ.get('DESTINATION')
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 EMOJIS = os.environ.get('EMOJIS', '🗞,📰,🗒,🗓,📋,🔗,📝,🗃')
 PARAMETERS = os.environ.get('PARAMETERS', False)
+RUN = os.environ.get('RUN', False)
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -36,6 +37,8 @@ def check_history(link):
     return data
 
 def send_message(topic, button):
+    if not RUN:
+        return
     MESSAGE_TEMPLATE = os.environ.get(f'MESSAGE_TEMPLATE', False)
     if MESSAGE_TEMPLATE:
         MESSAGE_TEMPLATE = set_env_vars(MESSAGE_TEMPLATE, topic)
