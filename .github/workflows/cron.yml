@@ -12,6 +12,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
       - name: Download artifact
+        id: download
         continue-on-error: true
         uses: dawidd6/action-download-artifact@v2
         with:
@@ -20,6 +21,15 @@ jobs:
       - name: Move database
         continue-on-error: true
         run: mv rss2telegram/rss2telegram.db rss2telegram.db
+      - name: Set to run
+        if: steps.download.outcome == 'success'
+        env:
+          RUN: True
+      - name: Set to dry-run
+        if: steps.download.outcome == 'failure'
+        env:
+          RUN: False
+      - name: Setup Python
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -36,6 +46,7 @@ jobs:
           MESSAGE_TEMPLATE: ${{ secrets.MESSAGE_TEMPLATE }}
           BUTTON_TEXT: ${{ secrets.BUTTON_TEXT }}
           PARAMETERS: ${{ secrets.PARAMETERS }}
+          RUN: ${{ RUN }}
       - name: Upload history
         uses: actions/upload-artifact@v3
         with:
