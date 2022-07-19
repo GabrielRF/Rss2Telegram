@@ -124,7 +124,8 @@ def check_topics(url):
             BUTTON_TEXT = set_env_vars(BUTTON_TEXT, topic)
         try:
             send_message(topic, BUTTON_TEXT)
-        except telebot.apihelper.ApiTelegramException:
+        except telebot.apihelper.ApiTelegramException as e:
+            print(e)
             pass
         add_to_history(topic['link'])
 
