@@ -16,11 +16,11 @@ Issues também são sempre bem vindas.
 
 Defina as variáveis na aba `Secrets` do repositório:
 
+`DESTINATION`: Destinos das mensagens separados por vírgulas (`@destino` ou ID). Opcionalmente, remova a variável e crie um arquivo de nome `DESTINATION.txt` com os valores;
+
+`URL`: Endereços de feeds RSS separados por vírgulas. Opcionalmente, remova a variável e crie um arquivo de nome `URL.txt` com os valores;
+
 `BOT_TOKEN`: Token do bot que enviará as mensagens no canal ([@BotFather](https://t.me/BotFather));
-
-`DESTINATION`: Destinos das mensagens separados por vírgulas (`@destino` ou ID);
-
-`URL`: Endereços de feeds RSS separados por vírgulas;
 
 `PARAMETERS`: (opcional) Parâmetros que serão adicionados ao fim do link;
 

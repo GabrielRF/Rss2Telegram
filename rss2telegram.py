@@ -10,8 +10,14 @@ import random
 import requests
 import sqlite3
 
-URL = os.environ.get('URL')
-DESTINATION = os.environ.get('DESTINATION')
+def get_variable(variable):
+    if not os.environ.get(f'{variable}'):
+        var_file = open(f'{variable}.txt', 'r')
+        return var_file.read()
+    return os.environ.get(f'{variable}')
+
+URL = get_variable('URL')
+DESTINATION = get_variable('DESTINATION')
 BOT_TOKEN = os.environ.get('BOT_TOKEN')
 EMOJIS = os.environ.get('EMOJIS', '🗞,📰,🗒,🗓,📋,🔗,📝,🗃')
 PARAMETERS = os.environ.get('PARAMETERS', False)
@@ -41,7 +47,7 @@ def send_message(topic, button):
         return
     MESSAGE_TEMPLATE = os.environ.get(f'MESSAGE_TEMPLATE', False)
     if MESSAGE_TEMPLATE:
-        MESSAGE_TEMPLATE = set_env_vars(MESSAGE_TEMPLATE, topic)
+        MESSAGE_TEMPLATE = set_text_vars(MESSAGE_TEMPLATE, topic)
     else:
         MESSAGE_TEMPLATE = f'<b>{topic["title"]}</b>'
 
@@ -87,7 +93,7 @@ def define_link(link, PARAMETERS):
 
 
 
-def set_env_vars(text, topic):
+def set_text_vars(text, topic):
     cases = {
         'SITE_NAME': topic['site_name'],
         'TITLE': topic['title'],
@@ -123,7 +129,7 @@ def check_topics(url):
         topic['photo'] = get_img(tpc.links[0].href)
         BUTTON_TEXT = os.environ.get('BUTTON_TEXT', False)
         if BUTTON_TEXT:
-            BUTTON_TEXT = set_env_vars(BUTTON_TEXT, topic)
+            BUTTON_TEXT = set_text_vars(BUTTON_TEXT, topic)
         try:
             send_message(topic, BUTTON_TEXT)
         except telebot.apihelper.ApiTelegramException as e:
