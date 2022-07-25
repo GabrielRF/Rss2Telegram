@@ -42,6 +42,25 @@ def check_history(link):
     conn.close()
     return data
 
+def firewall(text):
+    try:
+        rules = open(f'RULES.txt', 'r')
+    except FileNotFoundError:
+        return True
+    result = None
+    for rule in rules.readlines():
+        opt, arg = rule.split(':')
+        arg = arg.strip()
+        if arg == 'ALL' and opt == 'DROP':
+            result = False
+        elif arg == 'ALL' and opt == 'ACCEPT':
+            result = True
+        elif arg.lower() in text.lower() and opt == 'DROP':
+            result = False
+        elif arg.lower() in text.lower() and opt == 'ACCEPT':
+            result = True
+    return result
+
 def send_message(topic, button):
     if DRYRUN == 'failure':
         return
@@ -50,6 +69,10 @@ def send_message(topic, button):
         MESSAGE_TEMPLATE = set_text_vars(MESSAGE_TEMPLATE, topic)
     else:
         MESSAGE_TEMPLATE = f'<b>{topic["title"]}</b>'
+
+    if not firewall(MESSAGE_TEMPLATE):
+        print(f'xxx {topic["title"]}')
+        return
 
     btn_link = button
     if button:

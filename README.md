@@ -42,6 +42,37 @@ Defina as variáveis na aba `Secrets` do repositório:
 
 `{EMOJI}`: Emoji escolhido aleatoriamente da lista.
 
+## Filtros
+
+Por padrão, todos os elementos do feed RSS serão enviados. Caso queira filtrar o conteúdo, crie um arquivo chamado `RULES.txt` e adicione as regras desejadas ao arquivo. As regras serão executadas em ordem!
+
+> O valor contido em termo funcionará independente de letras maiúsculas ou minúsculas.
+
+`ACCEPT:ALL`: Todas as mensagens serão enviadas;
+
+`DROP:ALL`: Todas as mensagens não serão enviadas;
+
+`ACCEPT:termo`: A mensagem será enviada se `termo` estiver presente;
+
+`DROP:termo`: A mensagem não será enviada se `termo` estiver presente.
+
+### Exemplos de Filtros:
+
+1. Todos as mensagens serão enviadas, menos as que tiverem o termo `política`:
+
+```
+ACCEPT:ALL
+DROP:Política
+```
+
+2. Nenhuma mensagem será enviada, com exceção das mensagens com os termos `futebol` e `vôlei`:
+
+```
+DROP:ALL
+ACCEPT:futebol
+ACCEPT:vôlei
+```
+
 ## Uso
 
 Faça um *Fork*, defina as variáveis e habilite a ação em "*Enable workflow*". Pronto! 
