@@ -60,8 +60,8 @@ def send_message(topic, button):
     if topic['photo']:
         response = requests.get(topic['photo'], headers = {'User-agent': 'Mozilla/5.1'})
         open('img', 'wb').write(response.content)
-        photo = open('img', 'rb')
         for dest in DESTINATION.split(','):
+            photo = open('img', 'rb')
             try:
                 bot.send_photo(dest, photo, caption=MESSAGE_TEMPLATE, parse_mode='HTML', reply_markup=btn_link)
             except telebot.apihelper.ApiTelegramException:
