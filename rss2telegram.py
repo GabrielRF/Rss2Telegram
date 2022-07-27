@@ -70,7 +70,7 @@ def send_message(topic, button):
     else:
         MESSAGE_TEMPLATE = f'<b>{topic["title"]}</b>'
 
-    if not firewall(MESSAGE_TEMPLATE):
+    if not firewall(str(topic)):
         print(f'xxx {topic["title"]}')
         return
 
