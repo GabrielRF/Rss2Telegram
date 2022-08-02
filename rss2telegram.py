@@ -105,6 +105,8 @@ def get_img(url):
         photo = False
     except requests.exceptions.ReadTimeout:
         photo = False
+    except requests.exceptions.TooManyRedirects:
+        photo = False
     return photo
 
 def define_link(link, PARAMETERS):
