@@ -92,7 +92,7 @@ def send_message(topic, button):
                 send_message(topic, button)
     else:
         for dest in DESTINATION.split(','):
-            bot.send_message(dest, MESSAGE_TEMPLATE, parse_mode='HTML', reply_markup=button, disable_web_page_preview=True)
+            bot.send_message(dest, MESSAGE_TEMPLATE, parse_mode='HTML', reply_markup=btn_link, disable_web_page_preview=True)
     print(f'... {topic["title"]}')
     time.sleep(0.2)
 
