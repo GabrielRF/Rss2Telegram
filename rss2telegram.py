@@ -163,6 +163,6 @@ def check_topics(url):
             pass
 
 if __name__ == "__main__":
-    for url in URL.split(','):
+    for url in URL.split():
         check_topics(url)
 

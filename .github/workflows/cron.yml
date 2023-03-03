@@ -31,13 +31,13 @@ jobs:
       - name: Run Rss to Telegram
         run: python rss2telegram.py
         env:
-          DESTINATION: ${{ secrets.DESTINATION }}
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          URL: ${{ secrets.URL }}
-          EMOJIS: ${{ secrets.EMOJIS }}
-          MESSAGE_TEMPLATE: ${{ secrets.MESSAGE_TEMPLATE }}
-          BUTTON_TEXT: ${{ secrets.BUTTON_TEXT }}
-          PARAMETERS: ${{ secrets.PARAMETERS }}
+          DESTINATION: ${{ vars.DESTINATION }}
+          URL: ${{ vars.URL }}
+          EMOJIS: ${{ vars.EMOJIS }}
+          MESSAGE_TEMPLATE: ${{ vars.MESSAGE_TEMPLATE }}
+          BUTTON_TEXT: ${{ vars.BUTTON_TEXT }}
+          PARAMETERS: ${{ vars.PARAMETERS }}
           DRYRUN: ${{ steps.download.outcome }}
       - name: Upload history
         uses: actions/upload-artifact@v3
