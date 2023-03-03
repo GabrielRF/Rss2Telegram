@@ -23,7 +23,7 @@ jobs:
         continue-on-error: true
         run: mv rss2telegram/rss2telegram.db rss2telegram.db
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.8'
       - name: Install Requirements
