@@ -32,6 +32,8 @@ Defina as variáveis na aba `Variables` do repositório:
 
 `EMOJIS`: (opcional) Emojis separados por vírgulas. Podem ser usados na mensagem ou no botão;
 
+`TOPIC`: (opcional) ID do tópico em que a mensagem será enviada. Necessário para grupos com a opção de tópicos ativada. [Como obter um ID de um tópico](#id-de-tópico)
+
 ### Opções de variáveis
 
 `{SITE_NAME}`: Nome do site;
@@ -82,3 +84,9 @@ Faça um *Fork*, defina as variáveis e habilite a ação em "*Enable workflow*"
 ![Enable Workflow](https://user-images.githubusercontent.com/7331540/178158090-bf774cae-071b-4ac2-ab03-9c5c1132b79e.png)
 
 A ação irá buscar as atualizações a cada hora conforme definido no arquivo [cron.yml](.github/workflows/cron.yml).
+
+## ID de tópico
+
+Caso o grupo tenha a opção de tópicos ativada, será necessário indicar em qual tópico a mensagem será enviada. Isto é feito usando-se a variável `TOPIC`. A maneira mais fácil de se obter um ID de um tópico é copiando o link de uma mensagem de um tópico. O ID será o penúltimo número do link.
+
+Exemplo: O link para uma mensagem de um tópico seria `https://t.me/c/987654321/123/4567`. Neste caso, `123` seria o ID do tópico, o número que deveria ser colocado na variável.

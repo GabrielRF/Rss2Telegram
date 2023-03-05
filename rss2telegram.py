@@ -22,6 +22,7 @@ BOT_TOKEN = os.environ.get('BOT_TOKEN')
 EMOJIS = os.environ.get('EMOJIS', '🗞,📰,🗒,🗓,📋,🔗,📝,🗃')
 PARAMETERS = os.environ.get('PARAMETERS', False)
 DRYRUN = os.environ.get('DRYRUN')
+TOPIC = os.environ.get('TOPIC', False)
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -86,13 +87,13 @@ def send_message(topic, button):
         for dest in DESTINATION.split(','):
             photo = open('img', 'rb')
             try:
-                bot.send_photo(dest, photo, caption=MESSAGE_TEMPLATE, parse_mode='HTML', reply_markup=btn_link)
+                bot.send_photo(dest, photo, caption=MESSAGE_TEMPLATE, parse_mode='HTML', reply_markup=btn_link, reply_to_message_id=TOPIC)
             except telebot.apihelper.ApiTelegramException:
                 topic['photo'] = False
                 send_message(topic, button)
     else:
         for dest in DESTINATION.split(','):
-            bot.send_message(dest, MESSAGE_TEMPLATE, parse_mode='HTML', reply_markup=btn_link, disable_web_page_preview=True)
+            bot.send_message(dest, MESSAGE_TEMPLATE, parse_mode='HTML', reply_markup=btn_link, disable_web_page_preview=True, reply_to_message_id=TOPIC)
     print(f'... {topic["title"]}')
     time.sleep(0.2)
 
