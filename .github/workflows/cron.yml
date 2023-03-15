@@ -36,6 +36,7 @@ jobs:
           URL: ${{ vars.URL }}
           EMOJIS: ${{ vars.EMOJIS }}
           TOPIC: ${{ vars.TOPIC }}
+          HIDE_BUTTON: ${{ vars.HIDE_BUTTON }}
           MESSAGE_TEMPLATE: ${{ vars.MESSAGE_TEMPLATE }}
           BUTTON_TEXT: ${{ vars.BUTTON_TEXT }}
           PARAMETERS: ${{ vars.PARAMETERS }}

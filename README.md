@@ -34,6 +34,8 @@ Defina as variáveis na aba `Variables` do repositório:
 
 `TOPIC`: (opcional) ID do tópico em que a mensagem será enviada. Necessário para grupos com a opção de tópicos ativada. [Como obter um ID de um tópico](#id-de-tópico)
 
+`HIDE_BUTTON`: (opcional) Caso definida, desabilita o botão no envio, permitindo assim a existência do `Leitura Rápida`.
+
 ### Opções de variáveis
 
 `{SITE_NAME}`: Nome do site;
