@@ -34,6 +34,8 @@ Defina as variáveis na aba `Variables` do repositório:
 
 `TOPIC`: (opcional) ID do tópico em que a mensagem será enviada. Necessário para grupos com a opção de tópicos ativada. [Como obter um ID de um tópico](#id-de-tópico)
 
+`TELEGRAPH_TOKEN`: (opcional) Chave para acesso ao Telegraph. [Como obter uma chave Telegraph](#chave-telegraph)
+
 `HIDE_BUTTON`: (opcional) Caso definida, desabilita o botão no envio, permitindo assim a existência do `Leitura Rápida`.
 
 ### Opções de variáveis
@@ -92,3 +94,34 @@ A ação irá buscar as atualizações a cada hora conforme definido no arquivo 
 Caso o grupo tenha a opção de tópicos ativada, será necessário indicar em qual tópico a mensagem será enviada. Isto é feito usando-se a variável `TOPIC`. A maneira mais fácil de se obter um ID de um tópico é copiando o link de uma mensagem de um tópico. O ID será o penúltimo número do link.
 
 Exemplo: O link para uma mensagem de um tópico seria `https://t.me/c/987654321/123/4567`. Neste caso, `123` seria o ID do tópico, o número que deveria ser colocado na variável.
+
+## Chave Telegraph
+
+> Atenção: Caso a variável <i>TELEGRAPH_TOKEN</i> esteja definida, o post não terá botão ou imagem, pois ambos não permitiriam a existência da opção "Visualização Rápida".
+
+Para criar sua chave de acesso ao Telegraph e gerar a <i>Visualização Rápida</i> de qualquer site, acesse:
+
+```
+https://api.telegra.ph/createAccount?short_name=<SHORT_NAME>&author_name=<AUTHOR_NAME>
+```
+
+* `SHORT_NAME`: Uma abreviação de seu nome;
+
+* `AUTHOR_NAME`: Seu nome.
+
+A resposta do site será algo como:
+
+```
+{
+  "ok": true,
+  "result": {
+    "short_name": "NOME",
+    "author_name": "NOME",
+    "author_url": "",
+    "access_token": "abcdefghijklmnopqrtuvxz123456789",
+    "auth_url": "https://edit.telegra.ph/auth/123456789012345678901234567890"
+  }
+}
+```
+
+O valor presente em `access_token` é o valor a ser usado na variável `TELEGRAPH_TOKEN`.

@@ -5,6 +5,7 @@ import feedparser
 import os
 import re
 import telebot
+import telegraph
 import time
 import random
 import requests
@@ -24,6 +25,7 @@ PARAMETERS = os.environ.get('PARAMETERS', False)
 HIDE_BUTTON = os.environ.get('HIDE_BUTTON', False)
 DRYRUN = os.environ.get('DRYRUN')
 TOPIC = os.environ.get('TOPIC', False)
+TELEGRAPH_TOKEN = os.environ.get('TELEGRAPH_TOKEN', False)
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -63,14 +65,34 @@ def firewall(text):
             result = True
     return result
 
+def create_telegraph_post(topic):
+    telegraph_auth = telegraph.Telegraph(
+        access_token=f'{get_variable("TELEGRAPH_TOKEN")}'
+    )
+    response = telegraph_auth.create_page(
+        f'{topic["title"]}',
+        html_content=(
+            f'{topic["summary"]}<br><br>'
+            + f'<a href="{topic["link"]}">Ver original ({topic["site_name"]})</a>'
+        ),
+        author_name=f'{topic["site_name"]}'
+    )
+    return response["url"]
+
 def send_message(topic, button):
     if DRYRUN == 'failure':
         return
+
     MESSAGE_TEMPLATE = os.environ.get(f'MESSAGE_TEMPLATE', False)
+
     if MESSAGE_TEMPLATE:
         MESSAGE_TEMPLATE = set_text_vars(MESSAGE_TEMPLATE, topic)
     else:
         MESSAGE_TEMPLATE = f'<b>{topic["title"]}</b>'
+
+    if TELEGRAPH_TOKEN:
+        iv_link = create_telegraph_post(topic)
+        MESSAGE_TEMPLATE = f'<a href="{iv_link}">󠀠</a>{MESSAGE_TEMPLATE}'
 
     if not firewall(str(topic)):
         print(f'xxx {topic["title"]}')
@@ -82,11 +104,11 @@ def send_message(topic, button):
         btn = types.InlineKeyboardButton(f'{button}', url=topic['link'])
         btn_link.row(btn)
 
-    if HIDE_BUTTON:
+    if HIDE_BUTTON or TELEGRAPH_TOKEN:
         for dest in DESTINATION.split(','):
             bot.send_message(dest, MESSAGE_TEMPLATE, parse_mode='HTML', reply_to_message_id=TOPIC)
     else:
-        if topic['photo']:
+        if topic['photo'] and not TELEGRAPH_TOKEN:
             response = requests.get(topic['photo'], headers = {'User-agent': 'Mozilla/5.1'})
             open('img', 'wb').write(response.content)
             for dest in DESTINATION.split(','):

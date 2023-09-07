@@ -3,3 +3,4 @@ requests==2.28.0
 feedparser==6.0.10
 bs4==0.0.1
 beautifulsoup4==4.11.1
+telegraph==1.4.1
