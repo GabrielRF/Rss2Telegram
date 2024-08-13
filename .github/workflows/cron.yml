@@ -11,11 +11,11 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Download artifact
         id: download
         continue-on-error: true
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v6
         with:
           workflow: cron.yml
           workflow_conclusion: success
@@ -23,7 +23,7 @@ jobs:
         continue-on-error: true
         run: mv rss2telegram/rss2telegram.db rss2telegram.db
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.8'
       - name: Install Requirements
@@ -43,7 +43,7 @@ jobs:
           TELEGRAPH_TOKEN: ${{ vars.TELEGRAPH_TOKEN }}
           DRYRUN: ${{ steps.download.outcome }}
       - name: Upload history
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: rss2telegram
           path: rss2telegram.db
